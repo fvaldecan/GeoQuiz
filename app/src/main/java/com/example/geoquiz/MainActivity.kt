@@ -12,11 +12,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
+private const val KEY_TOTAL_ANSWERED = "totalAnswered"
+private const val KEY_TOTAL_CORRECT = "totalCorrect"
+
 private const val REQUEST_CODE_CHEAT = 0
 
 class MainActivity : AppCompatActivity() {
@@ -26,9 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var nextButton: ImageButton
     private lateinit var questionTextView: TextView
 
-    private var currentIndex = 0
-    private var totalAnswered = 0
-    private var answersCorrect = 0
 
     private lateinit var cheatButton: Button
     private val quizViewModel: QuizViewModel by lazy {
@@ -42,6 +41,10 @@ class MainActivity : AppCompatActivity() {
         val currentIndex = savedInstanceState?.getInt(KEY_INDEX, 0) ?: 0
         quizViewModel.currentIndex = currentIndex
 
+        val totalAnswered = savedInstanceState?.getInt(KEY_TOTAL_ANSWERED, 0) ?: 0
+        quizViewModel.totalAnswered = totalAnswered
+        val totalCorrect = savedInstanceState?.getInt(KEY_TOTAL_CORRECT, 0) ?: 0
+        quizViewModel.totalCorrect = totalCorrect
 
 //        References content view
         trueButton = findViewById(R.id.true_button)
@@ -60,14 +63,14 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
         prevButton.setOnClickListener {
-            if (totalAnswered == quizViewModel.questionBankSize) {
+            if (quizViewModel.completed) {
                 showGrade()
             }
             quizViewModel.moveToPrev()
             updateQuestion()
         }
         nextButton.setOnClickListener {
-            if (totalAnswered == quizViewModel.questionBankSize) {
+            if (quizViewModel.completed) {
                 showGrade()
             }
             quizViewModel.moveToNext()
@@ -113,6 +116,9 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(saveInstanceState)
         Log.i(TAG, "onSaveInstanceState")
         saveInstanceState.putInt(KEY_INDEX, quizViewModel.currentIndex)
+        saveInstanceState.putInt(KEY_TOTAL_ANSWERED, quizViewModel.totalAnswered)
+        saveInstanceState.putInt(KEY_TOTAL_CORRECT, quizViewModel.totalCorrect)
+
     }
 
     override fun onStop() {
@@ -135,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         quizViewModel.changeAnsweredState(true)
       
         val correctAnswer = quizViewModel.currentQuestionAnswer
-        if(userAnswer == correctAnswer) answersCorrect += 1
+        if(userAnswer == correctAnswer && !quizViewModel.currentCheatState) quizViewModel.totalCorrect += 1
       
         val messageResId = when{
             quizViewModel.currentCheatState -> R.string.judgment_toast
@@ -143,8 +149,8 @@ class MainActivity : AppCompatActivity() {
             else -> R.string.incorrect_toast
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
-        totalAnswered += 1
-        Log.d(TAG, "checkAnswered() called $totalAnswered")
+        quizViewModel.totalAnswered += 1
+        Log.d(TAG, "checkAnswered() called ${quizViewModel.totalAnswered}")
         isAnswered()
     }
 
@@ -156,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showGrade() {
 
-        val percent = (answersCorrect * 100) / quizViewModel.questionBankSize
+        val percent = (quizViewModel.totalCorrect * 100) / quizViewModel.questionBankSize
         Log.d(TAG, "showGrade() called $percent")
 
         val toast = Toast.makeText(this, "$percent % correct", Toast.LENGTH_LONG)

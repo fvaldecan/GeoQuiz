@@ -18,8 +18,10 @@ class QuizViewModel : ViewModel(){
         Question(R.string.q10, false, false,false)
     )
     var currentIndex = 0
-    var isCheater = false
 //    get() is simple getter to variable
+    var totalAnswered = 0
+    var totalCorrect = 0
+    val completed: Boolean get() = totalAnswered == questionBankSize
     val currentQuestionAnswer: Boolean get() = questionBank[currentIndex].answer
     val currentQuestionText: Int get() = questionBank[currentIndex].textResId
     val currentCheatState: Boolean get() = questionBank[currentIndex].cheatedOn
