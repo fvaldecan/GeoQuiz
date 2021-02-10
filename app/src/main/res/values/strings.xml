@@ -4,16 +4,16 @@
     <string name="false_button">False</string>
     <string name="correct_toast">Correct!</string>
     <string name="incorrect_toast">Incorrect!</string>
-    <string name="question_australia">Canberra is the capital of Australia.</string>
-    <string name="question_oceans">The Pacific Ocean is larger than
- the Atlantic Ocean.</string>
-    <string name="question_mideast">The Suez Canal connects the Red Sea
- and the Indian Ocean.</string>
-    <string name="question_africa">The source of the Nile River is in Egypt.</string>
-    <string name="question_americas">The Amazon River is the longest river
- in the Americas.</string>
-    <string name="question_asia">Lake Baikal is the world\'s oldest and deepest
- freshwater lake.</string>
+    <string name="q1">1. The same server serves the whole game</string>
+    <string name="q2">2. Only the serving team can win a point</string>
+    <string name="q3">3. 1 attempt is allowed to get the serve into the correct box</string>
+    <string name="q4">4. If the ball hits the net, and goes into the correct box, the serve is repeated.</string>
+    <string name="q5">5. The first serve is always from the right side</string>
+    <string name="q6">6. Both teams/players move from side to side when a point is scored</string>
+    <string name="q7">7. Deuce is always served from the left</string>
+    <string name="q8">8. Two bounces are allowed on each side</string>
+    <string name="q9">9. Balls that land on the line are in</string>
+    <string name="q10">10. In the early game of tennis dead rodents were used instead of balls</string>
     <string name="prev_button">Prev</string>
     <string name="next_button">Next</string>
     <!--    TODO: 10 Different Questions-->

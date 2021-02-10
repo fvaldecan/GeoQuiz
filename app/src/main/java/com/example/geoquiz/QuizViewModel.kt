@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel
 private const val TAG = "QuizViewModel"
 class QuizViewModel : ViewModel(){
     private val questionBank = listOf(
-        Question(R.string.question_australia, false, false,false),
-        Question(R.string.question_oceans, true, false,false),
-        Question(R.string.question_mideast, true, false,false),
-        Question(R.string.question_africa, true, false,false),
-        Question(R.string.question_americas, true, false,false),
-        Question(R.string.question_asia, true, false,false)
+        Question(R.string.q1, true, false,false),
+        Question(R.string.q2, false, false,false),
+        Question(R.string.q3, false, false,false),
+        Question(R.string.q4, true, false,false),
+        Question(R.string.q5, true, false,false),
+        Question(R.string.q6, false, false,false),
+        Question(R.string.q7, false, false,false),
+        Question(R.string.q8, false, false,false),
+        Question(R.string.q9, true, false,false),
+        Question(R.string.q10, false, false,false)
     )
     var currentIndex = 0
     var isCheater = false
