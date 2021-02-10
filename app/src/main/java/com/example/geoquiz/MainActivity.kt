@@ -60,14 +60,14 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
         prevButton.setOnClickListener {
-            if (totalAnswered == questionBank.size) {
+            if (totalAnswered == quizViewModel.questionBankSize) {
                 showGrade()
             }
             quizViewModel.moveToPrev()
             updateQuestion()
         }
         nextButton.setOnClickListener {
-            if (totalAnswered == questionBank.size) {
+            if (totalAnswered == quizViewModel.questionBankSize) {
                 showGrade()
             }
             quizViewModel.moveToNext()
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        changeAnsweredState(true)
+        quizViewModel.changeAnsweredState(true)
       
         val correctAnswer = quizViewModel.currentQuestionAnswer
         if(userAnswer == correctAnswer) answersCorrect += 1
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showGrade() {
 
-        val percent = (answersCorrect * 100) / questionBank.size
+        val percent = (answersCorrect * 100) / quizViewModel.questionBankSize
         Log.d(TAG, "showGrade() called $percent")
 
         val toast = Toast.makeText(this, "$percent % correct", Toast.LENGTH_LONG)

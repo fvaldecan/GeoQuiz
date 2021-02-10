@@ -20,7 +20,7 @@ class QuizViewModel : ViewModel(){
     val currentQuestionText: Int get() = questionBank[currentIndex].textResId
     val currentCheatState: Boolean get() = questionBank[currentIndex].cheatedOn
     val currentAnsweredState: Boolean get() = questionBank[currentIndex].answered
-
+    val questionBankSize: Int get() = questionBank.size
     fun changeCheatState(cheatState: Boolean){
         questionBank[currentIndex].cheatedOn = cheatState
     }
